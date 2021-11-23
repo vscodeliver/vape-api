@@ -4,7 +4,7 @@ const verifyToken = require("../middleware/verifyToken");
 const Product = require("../models/Product");
 const Order = require("../models/Order");
 
-router.get("/get_products", verifyToken, async (req, res) => {
+router.get("/get_products", async (req, res) => {
   // const products = [1, 1, 2, 3, 5, 8, 13, 21, 34];
   // res.json(products);
 
