@@ -4,7 +4,7 @@ const verifyToken = require("../middleware/verifyToken");
 const Product = require("../models/Product");
 const Order = require("../models/Order");
 
-router.get("/get_products", async (req, res) => {
+router.get("/get_products", verifyToken, async (req, res) => {
   // const products = [1, 1, 2, 3, 5, 8, 13, 21, 34];
   // res.json(products);
 
@@ -63,10 +63,10 @@ router.post("/buy_product", verifyToken, async (req, res) => {
   });
 });
 
-router.post("/check_verification_code", async (req, res) => {
+router.post("/check_verification_code", verifyToken, async (req, res) => {
   const { verification_code } = req.body;
 
-  if (typeof verification_code !== 'string' || !verification_code.trim()) {
+  if (typeof verification_code !== "string" || !verification_code.trim()) {
     return res.status(403).json({
       ok: false,
       error: "Вы не предоставили код верификации",
