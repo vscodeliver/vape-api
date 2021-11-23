@@ -20,7 +20,7 @@ router.post("/sign_up", verifyCredentials, async (req, res) => {
   ) {
     return res.status(402).json({
       ok: false,
-      error: `The user with email address <${email}> already exists`,
+      error: `Пользователь с email-адресом <${email}> уже существует!`,
     });
   }
 
@@ -32,7 +32,7 @@ router.post("/sign_up", verifyCredentials, async (req, res) => {
     return res.status(500).json({
       ok: false,
       error:
-        "Something went wrong during signing up. Please try again a bit later.",
+        "Что-то пошло не так в процессе регистрации. Пожалуйста, повторите попытку чуть позже.",
     });
   }
 
@@ -45,7 +45,7 @@ router.post("/sign_up", verifyCredentials, async (req, res) => {
 
   res.status(201).json({
     ok: true,
-    message: `User has been successfully created`,
+    message: `Пользователь успешно создан`,
   });
 });
 
@@ -67,7 +67,7 @@ router.post("/sign_in", verifyCredentials, async (req, res) => {
     return notFoundError(res);
   }
 
-  console.log("User object:", user);
+  // console.log("User object:", user);
 
   const samePassword = await bcrypt.compare(password, user.password);
 
@@ -81,7 +81,7 @@ router.post("/sign_in", verifyCredentials, async (req, res) => {
   };
 
   const token = await jwt.sign(payload, process.env.SECRET_KEY, {
-    expiresIn: "3d",
+    expiresIn: "12h",
   });
 
   res.json({ token });
@@ -93,19 +93,19 @@ function verifyCredentials(req, res, next) {
   if (!email || !password) {
     return res.status(403).json({
       ok: false,
-      error: "You have provided invalid credentials",
+      error: "Вы не предоставили логин и/или пароль",
     });
   }
 
   if (!isEmail(email)) {
     return res.status(403).json({
       ok: false,
-      error: "You have provided invalid email address",
+      error: "Неверный адрес электронной почты",
     });
   }
 
-  console.log("Email:", email);
-  console.log("Password:", password);
+  // console.log("Email:", email);
+  // console.log("Password:", password);
 
   next();
 }
@@ -113,7 +113,7 @@ function verifyCredentials(req, res, next) {
 function notFoundError(response) {
   return response.status(403).json({
     ok: false,
-    error: "You have been provided invalid email address and/or password",
+    error: "Неверный адрес электронной почты и/или пароль",
   });
 }
 

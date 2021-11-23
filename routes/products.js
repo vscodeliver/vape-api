@@ -38,7 +38,7 @@ router.post("/buy_product", verifyToken, async (req, res) => {
   ) {
     return res.status(403).json({
       ok: false,
-      error: "You have provided invalid order details",
+      error: "Неправильные детали заказа",
     });
   }
 
@@ -57,19 +57,19 @@ router.post("/buy_product", verifyToken, async (req, res) => {
 
   res.status(201).json({
     ok: true,
-    status: `You have successfully ordered ${order
+    status: `Вы успешно заказали в количестве: ${order
       .map((product) => product.amount)
-      .reduce((a, b) => a + b)} products`,
+      .reduce((a, b) => a + b)}`,
   });
 });
 
 router.post("/check_verification_code", async (req, res) => {
   const { verification_code } = req.body;
 
-  if (!verification_code) {
+  if (typeof verification_code !== 'string' || !verification_code.trim()) {
     return res.status(403).json({
       ok: false,
-      error: "You have not provided a verification code",
+      error: "Вы не предоставили код верификации",
     });
   }
 
