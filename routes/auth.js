@@ -1,4 +1,7 @@
-require("dotenv").config();
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 const router = require("express").Router();
 const isEmail = require("validator/lib/isEmail");
 let jwt = require("jsonwebtoken");
