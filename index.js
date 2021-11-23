@@ -14,8 +14,8 @@ app.use(
   })
 );
 
-app.use("/api/users", authRoute);
-app.use("/api/", productsRoute);
+app.use("", authRoute);
+app.use("", productsRoute);
 
 // app.get("/", (req, res) => res.send("hello world"));
 
